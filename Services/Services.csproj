@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Data.Models.Mapping\Data.Models.Mapping.csproj" />
     <ProjectReference Include="..\Data.Models\Data.Models.csproj" />
     <ProjectReference Include="..\Helpers\Helpers.csproj" />
   </ItemGroup>

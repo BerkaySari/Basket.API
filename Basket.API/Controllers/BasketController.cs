@@ -121,6 +121,8 @@ namespace Basket.API.Controllers
         [HttpGet]
         public async Task<Response> CreateOrderAsync(string userId)
         {
+            //sepet onaylandı butonuna basıldığında tetiklenir.
+            //sepetid rabbitmq üzerinden publish edilir.
             await _basketService.CreateOrderAsync(userId);
             return EmptyResponse();
         }

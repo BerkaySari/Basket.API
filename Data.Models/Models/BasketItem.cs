@@ -2,10 +2,6 @@
 
 namespace Data.Models.Models
 {
-    public interface IBasketItem : IUserModel<string>, IBasketItemModel<string>
-    {
-    }
-
     public class BasketItem : BaseEntity, IBasketItem
     {
         public string UserId { get; set; }

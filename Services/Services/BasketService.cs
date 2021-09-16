@@ -1,4 +1,5 @@
-﻿using Data.Models.Models;
+﻿using Data.Models.Mapping.Consumers;
+using Data.Models.Models;
 using Helpers.Exceptions;
 using MassTransit;
 using Microsoft.Extensions.Caching.Distributed;
@@ -12,8 +13,11 @@ namespace Services.Services
 {
     public class BasketService : RedisDataService<BasketItem>, IBasketService
     {
-        public BasketService(IDistributedCache context) : base(context)
+        public IPublishEndpoint _publishEndpoint { get; set; }
+
+        public BasketService(IDistributedCache context, IPublishEndpoint publishEndpoint) : base(context)
         {
+            _publishEndpoint = publishEndpoint;
         }
 
 
@@ -126,22 +130,24 @@ namespace Services.Services
 
         public async Task CreateOrderAsync(string userId)
         {
-            //var basket = await GetBasketAsync(userId);
-            //if (!basket.Any())
-            //{
-            //    throw new BasketIsEmptyException();
-            //}
+            var basket = await GetBasketAsync(userId);
+            if (!basket.Any())
+            {
+                throw new BasketIsEmptyException();
+            }
 
-            //try
-            //{
-            //    Uri uri = new Uri("rabbitmq://localhost/ticketQueue");
-            //    var sendEndpoint = _sendEndpointProvider.GetSendEndpoint(uri);
-            //    sendEndpoint.Send<IBasketItem>(basket[0]);
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new RabbitMqCustomException(ex.Message);
-            //}
+            try
+            {
+                IBasketConsumer consumer = new BasketConsumer
+                {
+                    BasketId = getKey(userId)
+                };
+                await _publishEndpoint.Publish<IBasketConsumer>(consumer);
+            }
+            catch (Exception ex)
+            {
+                throw new RabbitMqCustomException(ex.Message);
+            }
         }
 
 
