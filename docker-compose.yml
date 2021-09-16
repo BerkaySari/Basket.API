@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: Basket.API/Dockerfile
+
+
+  rabbit:
+    image: rabbitmq:3-management-alpine
+    hostname: rabbitsrv
+    ports:
+     - 15672:15672
+     - 5672:5672
+    environment:
+     RABBITMQ_DEFAULT_USER: "guest"
+     RABBITMQ_DEFAULT_PASS: "123456"
+
+
+  redis-server:
+    image: "redis:alpine"
+    command: redis-server
+    ports:
+      - "6379:6379"

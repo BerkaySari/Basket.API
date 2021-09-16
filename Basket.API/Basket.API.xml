@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Basket.API</name>
+    </assembly>
+    <members>
+        <member name="M:Basket.API.Controllers.BasketController.GetBasketItemAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <param name="basketItemId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basket.API.Controllers.BasketController.GetBasketAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basket.API.Controllers.BasketController.CreateBasketItemAsync(System.String,Data.Models.Mapping.Requests.BasketItemRequest)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basket.API.Controllers.BasketController.UpdateBasketItemAsync(System.String,System.String,Data.Models.Mapping.Requests.BasketItemRequest)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <param name="basketItemId"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basket.API.Controllers.BasketController.DeleteBasketItemAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <param name="basketItemId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basket.API.Controllers.BasketController.DeleteBasketAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basket.API.Controllers.BasketController.CreateOrderAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
