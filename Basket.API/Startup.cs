@@ -1,3 +1,4 @@
+using Data.Models.Mapping.Consumers;
 using Data.Models.Mapping.Mapper;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
@@ -51,7 +52,7 @@ namespace Basket.API
                         hst.Password(Configuration.GetValue<string>("RabbitMqSettings:Password"));
                     });
 
-                    cfg.ReceiveEndpoint("CreateOrder", e =>
+                    cfg.ReceiveEndpoint("createorderevent", e =>
                     {
                         //e.ConfigureConsumer<CreateOrderConsumer>(context);
                     });
@@ -74,28 +75,9 @@ namespace Basket.API
             services.AddTransient<IBasketService, BasketService>();
             #endregion
 
-            #region Swagger
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Api Documentation"
-                });
-
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath, true);
-            });
-
-            services.AddSwaggerGenNewtonsoftSupport();
-            #endregion Swagger
-
-            services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddControllers();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -103,7 +85,7 @@ namespace Basket.API
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -113,17 +95,6 @@ namespace Basket.API
             {
                 endpoints.MapControllers();
             });
-
-            #region Swagger
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
-
-            _ = app.UseMvc();
-
-            #endregion Swagger
         }
     }
 }
